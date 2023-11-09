@@ -2,15 +2,23 @@ import streamlit as st
 import pandas as pd
 from prophet import Prophet
 
-# Load the data and perform the necessary processing
-url = 'https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv'
+file_path = "co_data.csv"
 
-# You can use the error_bad_lines handling in a different way to skip lines with errors
 try:
-    data = pd.read_csv(url)
+    data = pd.read_csv(file_path)
 except pd.errors.ParserError as e:
     print("Error occurred while reading CSV:", e)
     st.error("Error occurred while reading CSV: Please check your data")
+
+# Load the data and perform the necessary processing
+#url = 'https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv'
+
+# You can use the error_bad_lines handling in a different way to skip lines with errors
+#try:
+#    data = pd.read_csv(url)
+#except pd.errors.ParserError as e:
+#    print("Error occurred while reading CSV:", e)
+#    st.error("Error occurred while reading CSV: Please check your data")
 
 # Continue with the rest of the code
 
