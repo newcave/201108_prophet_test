@@ -4,26 +4,35 @@ from prophet import Prophet
 
 # Load the data and perform the necessary processing
 url = 'https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv'
-data = pd.read_csv(url, error_bad_lines=False)
 
-df_korea = data[data['Country/Region'] == 'Korea, South']
-df_korea = df_korea[['Date', 'Confirmed']]
-df_korea.columns = ['ds', 'y']
+# You can use the error_bad_lines handling in a different way to skip lines with errors
+try:
+    data = pd.read_csv(url)
+except pd.errors.ParserError as e:
+    print("Error occurred while reading CSV:", e)
+    st.error("Error occurred while reading CSV: Please check your data")
 
-# Create a Streamlit app
-st.title('COVID-19 Confirmed Cases Prediction for South Korea')
+# Continue with the rest of the code
 
-# Display the data
-st.subheader('Data')
-st.write(df_korea)
+if 'data' in locals():
+    df_korea = data[data['Country/Region'] == 'Korea, South']
+    df_korea = df_korea[['Date', 'Confirmed']]
+    df_korea.columns = ['ds', 'y']
 
-# Create and fit the Prophet model
-m = Prophet()
-m.fit(df_korea)
+    # Create a Streamlit app
+    st.title('COVID-19 Confirmed Cases Prediction for South Korea')
 
-# Forecast future dates
-future = m.make_future_dataframe(periods=14)
-forecast = m.predict(future)
+    # Display the data
+    st.subheader('Data')
+    st.write(df_korea)
+
+    # Create and fit the Prophet model
+    m = Prophet()
+    m.fit(df_korea)
+
+    # Forecast future dates
+    future = m.make_future_dataframe(periods=14)
+    forecast = m.predict(future)
 
 # Plot the forecast
 st.subheader('Forecast')
