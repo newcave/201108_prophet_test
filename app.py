@@ -7,9 +7,20 @@ file_path = "co_data2.csv"
 
 try:
     data = pd.read_csv(file_path)
+    
+    # Check the columns available in the DataFrame
+    st.write(data.columns)
+    
+    # Assuming 'Date' and 'Confirmed' are the correct column names in the CSV file
+    # Modify the code to use the correct column names for filtering
+    df_korea = data[data['CorrectColumnNameForCountry'] == 'Korea, South']  # Replace 'CorrectColumnNameForCountry' with the actual column name
+    
+    # Other parts of your code...
+    # ...
+except FileNotFoundError as e:
+    st.error(f"File not found: {e}")
 except pd.errors.ParserError as e:
-    print("Error occurred while reading CSV:", e)
-    st.error("Error occurred while reading CSV: Please check your data")
+    st.error(f"Error occurred while reading CSV: {e}")
 
 # Continue with the rest of the code
 
