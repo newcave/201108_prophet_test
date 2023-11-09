@@ -3,7 +3,7 @@ import pandas as pd
 from prophet import Prophet
 
 # Load the data from the local file and perform the necessary processing
-file_path = "co_data.csv"
+file_path = "co_data2.csv"
 
 try:
     data = pd.read_csv(file_path)
